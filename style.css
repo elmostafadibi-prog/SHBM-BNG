@@ -1,107 +1,40 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
-
-:root {
-    --primary-color: #0d2137;
-    --accent-color: #24b0ba;
-    --bg-color: #f4f7f6;
-    --text-color: #333;
-    --sidebar-width: 240px;
-}
-
 body {
-    font-family: 'Poppins', sans-serif;
-    background: var(--bg-color);
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f6f9;
 }
 
-/* Sidebar */
-.sidebar {
-    position: fixed;
-    height: 100%;
-    width: var(--sidebar-width);
-    background: var(--primary-color);
-    transition: all 0.5s ease;
-    z-index: 100;
-}
-
-.sidebar .logo-details {
-    height: 80px;
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
-    color: #fff;
-    font-size: 24px;
-    font-weight: 600;
-}
-
-.sidebar .nav-links {
-    padding-top: 20px;
-}
-
-.sidebar .nav-links li {
-    list-style: none;
-    height: 50px;
-}
-
-.sidebar .nav-links li a {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: #fff;
-    transition: all 0.4s ease;
-    padding-left: 20px;
-}
-
-.sidebar .nav-links li a.active, 
-.sidebar .nav-links li a:hover {
-    background: #1d3550;
-    border-left: 4px solid var(--accent-color);
-}
-
-.sidebar .nav-links li i {
-    min-width: 40px;
-    font-size: 18px;
-}
-
-/* Main Content */
-.home-section {
-    position: relative;
-    background: var(--bg-color);
-    min-height: 100vh;
-    left: var(--sidebar-width);
-    width: calc(100% - var(--sidebar-width));
-    transition: all 0.5s ease;
-}
-
-nav {
+header {
+    background-color: #1e293b;
+    color: white;
+    padding: 15px 30px;
     display: flex;
     justify-content: space-between;
-    height: 80px;
-    background: #fff;
-    padding: 0 30px;
     align-items: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.home-content {
+nav button {
+    background: #334155;
+    border: none;
+    color: white;
+    padding: 8px 15px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+nav button:hover {
+    background: #3b82f6;
+}
+
+main {
+    padding: 30px;
+}
+
+.dataTables_wrapper {
+    background: white;
     padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
-
-/* Table Styling */
-.card {
-    border: none;
-    border-radius: 12px;
-}
-
-#mainTable thead {
-    background-color: #f8f9fa;
-    color: var(--primary-color);
-}
-
-.dataTables_wrapper .dataTables_paginate .paginate_button.current {
-    background: var(--accent-color) !important;
-    color: white !important;
-    border: none;
-}
-
