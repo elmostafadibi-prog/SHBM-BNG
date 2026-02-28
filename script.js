@@ -1,4 +1,4 @@
-const API_KEY = "https://script.google.com/macros/s/AKfycbxENF2oxBn1wBTiJvGF01v1qwM8elxZiN_Lz9J3oY61dpm6Jd1y1Q7IP5at0s7R6-YjXw/exec";
+const API_KEY = "https://docs.google.com/spreadsheets/d/SPREADSHEET_ID/gviz/tq?tqx=out:json&sheet=tasks";
 const SPREADSHEET_ID = "1y1uTrvBAfnws1wCHl66n0UEqfPJqAn6SD6jwTuCn2o0";
 
 const sheetTabs = document.getElementById("sheetTabs");
