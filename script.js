@@ -1,5 +1,5 @@
 // --- CONFIGURATION ---
-const API_KEY = 'https://script.google.com/macros/s/AKfycby8KcjB2ibJOk_XRPhhA77rrXp4YxPXsUnR-8BCzrQZiQP6TJj-2j7sfoJRjl_WNowcng/exec'; // Remplacez par votre clé
+const API_KEY = 'https://script.google.com/macros/s/AKfycbxENF2oxBn1wBTiJvGF01v1qwM8elxZiN_Lz9J3oY61dpm6Jd1y1Q7IP5at0s7R6-YjXw/exec'; // Remplacez par votre clé
 const SPREADSHEET_ID = '1y1uTrvBAfnws1wCHl66n0UEqfPJqAn6SD6jwTuCn2o0';
 // ---------------------
 
