@@ -1,83 +1,59 @@
-// --- CONFIGURATION ---
-const API_KEY = 'https://script.google.com/macros/s/AKfycbxENF2oxBn1wBTiJvGF01v1qwM8elxZiN_Lz9J3oY61dpm6Jd1y1Q7IP5at0s7R6-YjXw/exec'; // Remplacez par votre clé
-const SPREADSHEET_ID = '1y1uTrvBAfnws1wCHl66n0UEqfPJqAn6SD6jwTuCn2o0';
-// ---------------------
+const API_KEY = "https://script.google.com/macros/s/AKfycbxENF2oxBn1wBTiJvGF01v1qwM8elxZiN_Lz9J3oY61dpm6Jd1y1Q7IP5at0s7R6-YjXw/exec";
+const SPREADSHEET_ID = "1y1uTrvBAfnws1wCHl66n0UEqfPJqAn6SD6jwTuCn2o0";
 
-let dataTable;
+const sheetTabs = document.getElementById("sheetTabs");
 
-$(document).ready(function() {
-    // Charger la feuille par défaut (tasks) au démarrage
-    loadSheet('tasks');
-});
-
-/**
- * Charge les données d'une feuille spécifique
- * @param {string} sheetName - Le nom de l'onglet dans Google Sheets
- * @param {HTMLElement} element - L'élément menu cliqué (optionnel)
- */
-async function loadSheet(sheetName, element = null) {
-    // UI : Mise à jour du menu actif
-    if (element) {
-        $('.nav-links li a').removeClass('active');
-        $(element).addClass('active');
-    }
-    
-    $('#current-sheet-title').text(`Tableau de bord : ${sheetName.toUpperCase()}`);
-    $('#loader').show();
-    $('#mainTable').hide();
-
-    // Détruire l'ancienne table si elle existe
-    if ($.fn.DataTable.isDataTable('#mainTable')) {
-        $('#mainTable').DataTable().destroy();
-        $('#mainTable').empty();
-    }
-
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${sheetName}?key=${API_KEY}`;
-
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
-
-        if (data.values && data.values.length > 0) {
-            renderTable(data.values);
-        } else {
-            $('#loader').hide();
-            alert("Aucune donnée trouvée dans cette feuille.");
-        }
-    } catch (error) {
-        console.error("Erreur d'extraction :", error);
-        $('#loader').hide();
-        alert("Erreur de connexion à Google Sheets. Vérifiez votre clé API.");
-    }
+async function getSheetNames() {
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}?key=${API_KEY}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    return data.sheets.map(sheet => sheet.properties.title);
 }
 
-/**
- * Génère le tableau HTML et initialise DataTables
- */
-function renderTable(values) {
-    const headers = values[0]; // Première ligne = Entêtes
-    const rows = values.slice(1); // Reste = Données
+async function loadSheet(sheetName) {
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${sheetName}?key=${API_KEY}`;
+    const response = await fetch(url);
+    const data = await response.json();
 
-    // Création de l'entête HTML
-    let thead = '<thead><tr>';
-    headers.forEach(h => thead += `<th>${h}</th>`);
-    thead += '</tr></thead>';
-    
-    $('#mainTable').append(thead);
+    const headers = data.values[0];
+    const rows = data.values.slice(1);
 
-    // Initialisation de DataTables
-    dataTable = $('#mainTable').DataTable({
-        data: rows,
+    $('#dataTable').DataTable().destroy();
+    const thead = document.querySelector("#dataTable thead");
+    const tbody = document.querySelector("#dataTable tbody");
+
+    thead.innerHTML = "";
+    tbody.innerHTML = "";
+
+    let headerRow = "<tr>";
+    headers.forEach(header => headerRow += `<th>${header}</th>`);
+    headerRow += "</tr>";
+    thead.innerHTML = headerRow;
+
+    rows.forEach(row => {
+        let tr = "<tr>";
+        row.forEach(cell => tr += `<td>${cell}</td>`);
+        tr += "</tr>";
+        tbody.innerHTML += tr;
+    });
+
+    $('#dataTable').DataTable({
         responsive: true,
-        pageLength: 10,
-        language: {
-            url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json'
-        },
-        dom: '<"top"f>rt<"bottom"lip><"clear">',
-        drawCallback: function() {
-            $('#loader').hide();
-            $('#mainTable').fadeIn();
-        }
+        pageLength: 10
     });
 }
 
+async function init() {
+    const sheets = await getSheetNames();
+
+    sheets.forEach(sheet => {
+        const btn = document.createElement("button");
+        btn.textContent = sheet;
+        btn.onclick = () => loadSheet(sheet);
+        sheetTabs.appendChild(btn);
+    });
+
+    loadSheet("tasks"); // feuille par défaut
+}
+
+init();
