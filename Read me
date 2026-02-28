@@ -1,1 +1,10 @@
-
+Guide d'hébergement sur GitHub Pages
+​Créer un dépôt sur GitHub (ex: agadir-dashboard).
+​Uploader les 3 fichiers (index.html, style.css, script.js).
+​Allez dans Settings > Pages.
+​Sous Build and deployment, choisissez la branche main et cliquez sur Save.
+​Votre application sera en ligne à l'adresse : https://votre-pseudo.github.io/agadir-dashboard/.
+​💡 Prochaines étapes suggérées :
+​Sécurité : Souhaitez-vous que j'ajoute un écran de connexion (Login) simple avant d'accéder aux données ?
+​Édition : Voulez-vous pouvoir modifier les données directement depuis l'application (nécessite l'utilisation d'un Google Apps Script en backend) ?
+​Graphiques : Voulez-vous ajouter des graphiques (Charts.js) au-dessus des tableaux pour le "Forecasting" ?
